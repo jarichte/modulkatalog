@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modulverwaltungsassistent</title>
+</head>
+<body>
+<h1> Modulkataloge der Universität Mannheim</h1>
+{% if modulkat_list %}
+    <ul>
+    {% for modulkataloge in modulkat_list %}
+        <li><a href="{% url 'detail' modulkataloge.id %}"> {{ modulkataloge.mk_von_studiengang}} {{modulkataloge.mk_abschluss}} {{modulkataloge.mk_jahr}}</a></li>
+        <a href="{% url 'pdf' modulkataloge.id %}"> Als PDF anzeigen</a>
+        <a href="{% url 'copy' modulkataloge.id %}">Modulkatalog kopieren</a>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Es sind keine Modulkataloge vorhanden!</p>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div class="modul">
+<table class="bwl">
+    <colgroup>
+        <col class="attribute">
+        <col class="praesenz">
+        <col class="selbst">
+    </colgroup>
+    <tr>
+        <td colspan="3">Modul: {{modul.md_kuerzel}} {{modul.md_name}}</td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            Lerninhalte <br>
+            {{modul.md_inhalte}}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+            Lern und Qualifikationsziele <br>
+            {{modul.md_kompetenzziele}}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">Voraussetzen <br>
+        {% for vorg in modul.md_voraussetzen.all %}
+            {{vorg.md_name}} {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="1">Anmeldepflicht:
+            {% for veranstaltung in modul.veranstaltung_set.all %}
+                {% if veranstaltung.getPruefung %}
+                    {% if veranstaltung.getPruefung.pm_anmeldung %}
+                        Ja
+                    {% else %}
+                        Nein
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </td>
+        <td colspan="2">Weitere Infos zur Anmeldung {{modul.md_anmeldung}}
+            {% for veranstaltung in modul.veranstaltung_set.all %}
+                {% if veranstaltung.getPruefung %}
+                    {{veranstaltung.getPruefung.pm_anmeldung|default:'-'}}
+                {% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        <td>Lehrveranstaltungen und -form</td>
+        <td>Präsenzstudium</td>
+        <td>Selbststudium</td>
+    </tr>
+    {% for veranstaltung in modul.veranstaltung_set.all %}
+    <tr>
+        <td>{{veranstaltung.v_typ}}</td>
+        <td>{{veranstaltung.v_aufwand_praesenz}}</td>
+        <td>{{veranstaltung.v_aufwand_selbststudium}}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="3">ECTS Modul insgesamt:  {{modul.md_ects}}</td>
+    </tr>
+    <tr>
+        <td>Prüfungsform und -umfang</td>
+        <td colspan="2">
+            {% for veranstaltung in modul.veranstaltung_set.all %}
+                {% if veranstaltung.getPruefung %}
+                    {{veranstaltung.getPruefung.pm_form|default:''}} ({{veranstaltung.getPruefung.dauer|default:''}} min.)
+                {% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        <td>Vorleistungen</td>
+        <td colspan="2">{{modul.md_weitere_informationen}}</td>
+    </tr>
+    <tr>
+        <td>Dozent(en)/Modulverantwortlicher</td>
+        <td colspan="2">
+            {% for mkv in modul.md_modulverantwortlich.all %}
+                {{mkv.p_titel|default:''}} {{mkv.p_vorname|default:''}} {{mkv.p_name|default:mkv.p_namenskuerzel}} {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        <td>Dauer des Moduls</td>
+        <td colspan="2">{{modul.md_dauer}} Semester</td>
+    </tr>
+    <td>Angebotsturnus</td>
+    <td colspan="2">{{modul.md_angebotsturnus}}</td>
+    <tr>
+        <td>Sprache</td>
+        <td colspan="2">{{modul.md_sprache}}</td>
+    </tr>
+    <tr>
+        <td>Programmspezifische Lernziele</td>
+        <td colspan="2">{{modul.md_abschlussziel}}</td>
+    </tr>
+    <tr>
+        <td>Note</td>
+        <td colspan="2">
+            {% for veranstaltung in modul.veranstaltung_set.all %}
+                {% if veranstaltung.getPruefung %}
+                    {{veranstaltung.getPruefung.pm_benotung}}
+                {% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        <td>Verwendbarkeit</td>
+        <td colspan="2">
+        {% for besitzt in modul.besitzt_set.all %}
+            {{besitzt.modulkatalog.mk_abschluss}} {{besitzt.modulkatalog.mk_von_studiengang}}
+        {% endfor %}
+        </td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

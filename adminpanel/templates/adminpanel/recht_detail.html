@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+
+</style>
+<body>
+<div class="modul">
+<table>
+    <th colspan="6">{{modul.md_name}} </th>
+    <tr>
+        <td>
+            Studienjahr <br>
+            {{modul.md_studienjahr|default:' '}}
+        </td>
+        <td>
+            Angebotsturnus <br>
+            {{modul.md_angebotsturnus|default:'-'}}
+        </td>
+        <td>
+            Sprache <br>
+            {{modul.md_sprache}}
+        </td>
+        <td>
+            Dauer <br>
+            {{modul.md_dauer}} Semester
+        </td>
+        <td>
+            ECTS <br>
+            {{modul.md_ects}}
+        </td>
+        <td>
+            SWS <br>
+            {{modul.calcSWS}}
+    </td>
+    </tr>
+    <th colspan="6">Lehrveranstaltungen</th>
+    {% for veranstaltung in modul.veranstaltung_set.all %}
+    <tr>
+        <td colspan="5">
+            {{veranstaltung.v_titel}} ({{veranstaltung.v_typ}})
+        </td>
+        <td>
+            {{veranstaltung.v_sws}}
+        </td>
+    </tr>
+        {% endfor %}
+    <tr>
+        <td colspan="6">
+            <em>Inhalte</em> <br> {{modul.md_inhalte}}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6">
+            <em>Lern und Qualifikationsziele</em> <br> {{modul.md_kompetenzziele}}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6">
+            Teilnahmevoraussetzungen <br>
+            Inhaltlich:
+            {% for vorg in modul.md_voraussetzen.all %}
+                {{vorg.md_name}} {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+            <br>
+            Formal:
+            {% for veranstaltung in modul.veranstaltung_set.all %}
+                {% if forloop.first %}
+                    {{veranstaltung.getPruefung.pm_vorraussetzungen}}
+                {% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6">
+            Lehr und Lernformen <br>
+            {{modul.md_lernformen}}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6">
+            Prüfungsform und -umfang <br>
+            {% for veranstaltung in modul.veranstaltung_set.all %}
+                {% if forloop.first %}
+                    {{veranstaltung.getPruefung.pm_form}} ({{veranstaltung.getPruefung.dauer}})
+                {% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6">
+            Dozenten <br>
+            {% for lehr in modul.md_lehrender.all %}
+                {{lehr.p_titel|default:''}} {{lehr.p_vorname|default:''}} {{lehr.p_name|default:''}} {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6">
+            Literatur <br>
+            {{modul.md_weitere_informationen}}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6">
+            Verwendbarkeit <br>
+            {% for besitzt in modul.besitzt_set.all %}
+                {{besitzt.modulkatalog.mk_abschluss}} {{besitzt.modulkatalog.mk_von_studiengang}} ({{besitzt.modulkatalog.mk_jahr}})
+            {% endfor %}
+        </td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

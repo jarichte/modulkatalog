@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+    </style>
+</head>
+<body>
+<div class="modul">
+<table>
+    <tr>
+        <th width="5%">Sem.</th>
+        <th width="10%">Typ</th>
+        <th width="25%">Veranstaltungstitel</th>
+        <th width="30%">Erforderliche Studienleistung</th>
+        <th width="15%">Prüfungsleistung</th>
+        <th width="8%">Abschluss </th>
+        <th width="7%">ECTS</th>
+    </tr>
+
+        {% for veranstaltung in modul.veranstaltung_set.all %}
+            <tr>
+                <td>{{veranstaltung.v_semester}}</td>
+                <td>{{veranstaltung.v_typ}}</td>
+                <td>{{veranstaltung.v_titel}}</td>
+                {% if veranstaltung.getPruefung %}
+                <td>{{veranstaltung.getPruefung.pm_vorraussetzung|default:' '}}</td>
+                {% if veranstaltung.getPruefung.pm_form %}
+                    <td>{{veranstaltung.getPruefung.pm_form|default:' '}} ({{veranstaltung.getPruefung.dauer|default:''}} Min.)</td>
+                {% else %}
+                    <td>  </td>
+                {% endif %}
+                <td>{{veranstaltung.getPruefung.pm_benotung|default:' '}}</td>
+                {% endif %}
+                <td>{{veranstaltung.v_ects|default:' '}}</td>
+            </tr>
+        {% endfor %}
+</table>
+
+<table>
+    <tr>
+        <td width="20%">Kontaktzeit</td>
+        <td width="80%">{{modul.md_kontakzeit}}</td>
+    </tr>
+    <tr>
+        <td>Selbststudium</td>
+        <td>{{modul.md_selbststudium}}</td>
+    </tr>
+    <tr>
+        <td>Voraussetzungen</td>
+        <td>
+            {% for vorg in modul.md_voraussetzen.all %}
+                {{vorg.md_name|default:' '}} {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        <td>Inhalte und erwartete Kompetenzen nach Abschluss des Moduls</td>
+        <td>
+            <p>
+                {{modul.md_inhalte|default:' '}}
+            </p>
+            <p>
+                {{modul.md_kompetenzziele| default:' '}}
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td>Verwendbarkeit des Moduls</td>
+        <td>
+            {% for besitzt in modul.besitzt_set.all %}
+                {{besitzt.modulkatalog.mk_abschluss}} {{besitzt.modulkatalog.mk_von_studiengang}} ({{besitzt.modulkatalog.mk_jahr}})
+            {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        <td>Grupppengröße</td>
+        <td>{{modul.md_gruppengroesse|default:' '}}</td>
+    </tr>
+    <tr>
+        <td>Häufigkeit des Angebotes</td>
+        <td>{{modul.md_angebotsturnus| default:' '}}</td>
+    </tr>
+    <tr>
+        <td>Dauer des Moduls</td>
+        <td>{{modul.md_dauer| default:' '}} Semester</td>
+    </tr>
+    <tr>
+        <td>Modulbeauftragte</td>
+        <td>
+            {% for mkv in modul.md_modulverantwortlich.all %}
+                {{mkv.p_titel|default:' '}} {{mkv.p_vorname|default:' '}} {{mkv.p_name|default:mkv.p_namenskuerzel}} {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        <td>Weitere Informationen</td>
+        <td>{{modul.md_weitere_informationen| default:' '}}</td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

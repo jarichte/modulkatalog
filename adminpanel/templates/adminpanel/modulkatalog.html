@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modulkatalog {{modulkat.mk_von_studiengang}} {{modulkat.mk_abschluss}}</title>
+    <style>
+    @page {
+    size: a4;
+    margin: 1cm;
+    }
+     table {
+        table-layout: fixed;
+        border-collapse: collapse;
+        width: 100%;
+        padding: 40px;
+        }
+    table th, td {
+        border: 1px solid black;
+        padding: 10px;
+        }
+     .modul {
+     margin-top: 2%;
+     margin-bottom: 10%;
+     margin-left: auto;
+     margin-right: auto;
+     width: 60%;
+        }
+
+     .beschreibung {
+       margin: auto;
+       width: 60%;
+       text-align: left;
+       font-family: "Times New Roman", Times, serif;
+       font-size: 1.6em;
+       }
+
+     h1 {
+        font-size: 300%;
+        text-align: center;
+        }
+
+     h2 {
+        font-size: 150%;
+        text-align: center;
+     }
+
+     h3 {
+        font-size: 100%;
+        text-align: center;
+        }
+    </style>
+</head>
+<h1>Universität Mannheim</h1>
+
+<h1>Modulkatalog {{studien_name}} {{modulkat.mk_abschluss}}</h1>
+
+<!-- generieren des Inhaltsverzeichnis -->
+<h2>Inhaltsverzeichnis</h2>
+{% if modulkat.mk_vorwort %} <h3><a href="#vorwort">Vorwort</a></h3> {% endif %}
+{% for t in typen %}
+    {% ifchanged t.typ%}
+    <h3><a href="#{{t.typ}}">{{t.typ}}</a></h3>
+    {% endifchanged %}
+{% endfor %}
+{% if modulkat.mk_nachwort %} <h3><a href="#nachwort">Nachwort</a></h3> {% endif %}
+
+<div class="beschreibung">
+    {% if modulkat.mk_vorwort %}
+    <h3> <a name="vorwort"></a> Vorwort</h3>
+        {{modulkat.mk_vorwort}}
+    {% endif %}
+    <p>gültig von: {{modulkat.mk_gueltig_von}} bis zum {{modulkat.mk_gueltig_bis}}</p>
+</div>
+
+<div>
+    <pdf:nextpage />
+</div>
+
+<!-- generieren der einzelnen Module -->
+{% for t in typen %}
+{% ifchanged t.typ %} <h2> <a name="{{t.typ}}"> {{t.typ}} </a> </h2> {% endifchanged %}
+
+   <!-- <details open="open"> -->
+    <!--    <summary>Weiter Informationen</summary> -->
+    {% if t.modul.md_darstellung == 'wifo' %}
+        {% include 'adminpanel/wifo_detail.html' with modul=t.modul typ=t.typ %}
+    {% elif t.modul.md_darstellung == 'bwl' %}
+        {% include 'adminpanel/bwl_detail.html' with modul=t.modul %}
+    {% elif t.modul.md_darstellung == 'sowi' %}
+        {% include 'adminpanel/sowi_detail.html' with modul=t.modul %}
+    {% elif t.modul.md_darstellung == 'recht' %}
+        {% include 'adminpanel/recht_detail.html' with modul=t.modul %}
+    {% elif t.modul.md_darstellung == 'vwl' %}
+        {% include 'adminpanel/vwl_detail.html' with modul=t.modul typ=t.typ%}
+    {% elif t.modul.md_darstellung == 'philo' %}
+        {% include 'adminpanel/philo_detail.html' with modul=t.modul %}
+    {% endif %}
+   <!-- </details> -->
+    <div>
+        <pdf:nextpage />
+    </div>
+
+{% endfor %}
+
+<div class="beschreibung">
+    {% if modulkat.mk_nachwort %}
+        <h2><a name="nachwort">Nachwort</a> </h2>
+        {{modulkat.mk_nachwort}}
+    {% endif %}
+</div>
+</body>
+</html>

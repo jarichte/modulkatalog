@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+<div class="modul">
+        {% for veranstaltung in modul.veranstaltung_set.all %}
+<table class="wifo">
+    <tr>
+    <th width="20%">&nbsp; {{ modul.md_kuerzel|default:'-' }}</th>
+    <th width="80%">&nbsp;{{ modul.md_name| default:'-'}}</th>
+    </tr>
+    <tr>
+    <td>&nbsp;Form der Veranstaltung</td>
+    <td>&nbsp;
+            {{veranstaltung.v_typ}}
+    </td>
+    </tr>
+    <tr>
+    <td>&nbsp;Typ der Veranstaltung</td>
+    <td>&nbsp;
+        {{t.typ}}
+    </td>
+    </tr>
+    <tr>
+    <td>&nbsp;Modulniveau</td>
+    <td>&nbsp;{{modul.md_abschlussziel|default:'-'}}</td>
+    </tr>
+    <tr>
+    <td>&nbsp;ECTS</td>
+    <td>&nbsp;{{modul.md_ects|default:'-'}}</td>
+    </tr>
+    <tr>
+    <td>&nbsp;Arbeitsaufwand</td>
+    <td>&nbsp;
+        Präsenzstudium: {{veranstaltung.v_aufwand_praesenz|default:'0'}} h pro Semester<br>
+        Vor- und Nachbereitung der Veranstaltung und freies Selbststudium: {{veranstaltung.v_aufwand_selbststudium|default:'0'}} h pro Semester<br>
+        Vorbereitung für die Prüfung, z.B. Prüfungs-/Semi-narabschlussarbeits- und Präsentationsvorbereitung: {{veranstaltung.v_aufwand_pruefungsvorbereitung|default:'0'}} h pro Semester<br>
+    </td>
+    </tr>
+    <tr>
+    <td>&nbsp;Vorausgesetzte Kenntnisse</td>
+    <td>&nbsp;
+        {% for vorg in modul.md_voraussetzen.all %}
+            {{vorg.md_name}} {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </td>
+    </tr>
+    <tr>
+    <td>&nbsp;Lehrinhalte</td>
+    <td>&nbsp;{{ modul.md_inhalte|default:'-'}}</td>
+    </tr>
+    <tr>
+    <td>&nbsp;Lern- und Kompetenzziele</td>
+    <td>&nbsp;{{modul.md_kompetenzziele|default:'-'}}</td>
+    </tr>
+    <tr>
+    <td>&nbsp;Begleitende Literatur</td>
+    <td>&nbsp;{{modul.md_weitere_informationen|default:'-'}}</td>
+    </tr>
+    <tr>
+    <td>&nbsp;Art der Pr&uuml;fungsleistung</td>
+    <td>&nbsp;
+    {{veranstaltung.getPruefung.pm_form}}
+    </td>
+    </tr>
+    <tr>
+    <td>&nbsp;Pr&uuml;fungsvorleistung</td>
+    <td>&nbsp;
+    {{veranstaltung.getPruefung.pm_vorraussetzungen}}
+    </td>
+    </tr>
+    <tr>
+    <td>&nbsp;Pr&uuml;fungsdauer&nbsp;</td>
+    <td>&nbsp;
+        {{veranstaltung.getPruefung.dauer}} Minuten
+    </td>
+    </tr>
+    <tr>
+    <td>&nbsp;Sprache</td>
+    <td>&nbsp;{{modul.md_sprache|default:'-'}}</td>
+    </tr>
+    <tr>
+    <td>&nbsp;Angebotsturnus</td>
+    <td>&nbsp;{{modul.md_angebotsturnus|default:'-'}}</td>
+    </tr>
+    <tr>
+    <td>&nbsp;Lehrende/r</td>
+    <td>&nbsp;
+        {% for lehr in modul.md_lehrender.all %}
+            {{lehr.p_titel|default:''}} {{lehr.p_vorname|default:''}} {{lehr.p_name|default:''}} {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </td>
+    </tr>
+    <tr>
+    <td>&nbsp;Modulverantwortlicher</td>
+    <td>&nbsp;
+        {% for mkv in modul.md_modulverantwortlich.all %}
+            {{mkv.p_titel|default:''}} {{mkv.p_vorname|default:''}} {{mkv.p_name|default:mkv.p_namenskuerzel}} {% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </td>
+    </tr>
+    <tr>
+    <td>&nbsp;Dauer des Moduls</td>
+    <td>&nbsp;{{modul.md_dauer}} Semester</td>
+    </tr>
+    <tr>
+    <td>&nbsp;Weiterf&uuml;hrende Module</td>
+    <td>
+        {% for nach in modul.nachfolger.all %}
+
+            {{nach.md_name}} {% if not forloop.last %} plus {% endif %}
+        {% endfor %}
+    </td>
+    </tr>
+    <tr>
+    <td>Verwendbarkeit</td>
+    <td>&nbsp;
+        {% for besitzt in modul.besitzt_set.all %}
+            {{besitzt.modulkatalog.mk_abschluss}} {{besitzt.modulkatalog.mk_von_studiengang}} ({{besitzt.modulkatalog.mk_jahr}})
+        {% endfor %}
+    </td>
+    </tr>
+    <tr>
+    <td>&nbsp;Einordnung in Fachsemester</td>
+    <td>&nbsp;{{modul.md_studienjahr}} Fachsemester</td>
+    </tr>
+
+</table>
+        {% endfor %}
+</div>
+</body>
+</html>

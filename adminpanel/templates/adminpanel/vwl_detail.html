@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modulkatalog {{modulkat.mk_von_studiengang}} {{modulkat.mk_abschluss}}</title>
+    <style>
+
+</style>
+</head>
+<body>
+    <div class="modul">
+    <table>
+        <tr>
+            <th width="20%"> {{modul.md_kuerzel}}</th>
+            <th width="80%"> {{modul.md_name}}</th>
+        </tr>
+        <tr>
+            <td>Art und Verwendbarkeit des Moduls</td>
+            <td>
+                {{typ}}
+            </td>
+        </tr>
+        <tr>
+            <td>Modulverantwortlicher</td>
+            <td>
+                {% for mkv in modul.md_modulverantwortlich.all %}
+                    {{mkv.p_titel|default:''}} {{mkv.p_vorname|default:''}} {{mkv.p_name|default:'-'}} {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+            <td>Weitere Lehrende</td>
+            <td>
+                {% for lehrender in modul.md_lehrender.all %}
+                    {{mkv.p_titel|default:''}} {{mkv.p_vorname|default:''}} {{mkv.p_name|default:'-'}} {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </td>
+        <tr>
+            <td>Turnus des Angebots</td>
+            <td>
+                {{modul.md_angebotsturnus|default:'-'}}
+            </td>
+        </tr>
+        <tr>
+            <td>Dauer</td>
+            <td>{{modul.md_dauer|default:'-'}}</td>
+        </tr>
+        <tr>
+            <td>ECTS-Punkte</td>
+            <td>{{modul.md_ects}}</td>
+        </tr>
+        <tr>
+            <td>Lehrmethode</td>
+            <td>
+                {% for veranstaltung in modul.veranstaltung_set.all %}
+                    {{veranstaltung.v_typ}} ({{veranstaltung.v_sws}}SWS) {% if not forloop.last %} plus {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>Arbeitsaufwand</td>
+            <td>
+                {% for veranstaltung in modul.veranstaltung_set.all %}
+                    Präsenzzeit {{veranstaltung.v_typ}}: {{veranstaltung.v_aufwand_praesenz|default:''}} Stunden,
+                    {% if veranstaltung.v_aufwand_pruefungsvorbereitung %}
+                        Zeit für Selbststudium, Klausurvorbereitung und Klausur: {{veranstaltung.v_aufwand_pruefungsvorbereitung}} Stunden
+                            {% if not forloop.last %}
+                                ,
+                            {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>Unterrichhtssprache</td>
+            <td>{{modul.md_sprache|default:'-'}}</td>
+        </tr>
+        <tr>
+            <td>Teilnahmevoraussetzungen</td>
+            <td>
+                {% for vorg in modul.md_voraussetzen.all %}
+                    {{vorg.md_name}} {% if not forloop.last %} plus {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>Benotung</td>
+            <td>
+                {% for veranstaltung in modul.veranstaltung_set.all %}
+                    {% if veranstaltung.getPruefung %}
+                        {{veranstaltung.getPruefung.pm_form}} ({{veranstaltung.getPruefung.dauer}} Minuten)
+                    {% endif %}
+                {% endfor %}
+            </td>
+        </tr>
+        <tr>
+            <td>Erwartete Zahl der Teilnehmer/innen</td>
+            <td>
+                {{ md.gruppengroesse|default:'-'}}
+            </td>
+        </tr>
+        <tr>
+            <td>Ziele und Inahlte des Moduls</td>
+            <td>
+                {{modul.md_inhalte|default:'-'}}
+            </td>
+        </tr>
+        <tr>
+            <td>Erwartete Kompetenzen nach Abschluss des Moduls</td>
+            <td>{{modul.md_kompetenzziele|default:'-'}}</td>
+        </tr>
+    </table>
+    </div>
+</body>
+</html>
