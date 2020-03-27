@@ -25,7 +25,7 @@ SECRET_KEY = '%r=6_qo-b^12_4^&yn_2awy+z5s%p!(zj3p%h+ivpms+zev*@#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['infinite-headland-67410.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
