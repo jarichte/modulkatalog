@@ -41,27 +41,27 @@ class Studiengang(models.Model):
         return self.sg_name
 
 class Modul(models.Model):
-    md_kuerzel = models.CharField("Modulkürzel", db_column='MD_Kuerzel', primary_key=True, max_length=20)
-    md_abschlussziel = models.CharField("Abschlussziel", db_column='MD_Abschlussziel', max_length=64, blank=True, null=True)
-    md_name = models.CharField("Name des Moduls", db_column='MD_Name', max_length=127, blank=True, null=True)
-    md_angebotsturnus = models.CharField("Angebotsturnus", db_column='MD_Angebotsturnus', max_length=64,choices=ANGEBOTSTURNUS, blank=True, null=True)
-    md_dauer = models.FloatField("Dauer", db_column='MD_Dauer', blank=True, null=True)
-    md_ects = models.IntegerField("ECTS", db_column='MD_ECTS', blank=True, null=True)
-    md_gruppengroesse = models.IntegerField("Gruppengröße", db_column='MD_Gruppengroesse', blank=True, null=True)
-    md_inhalte = models.TextField("Inhalte", db_column='MD_Inhalte', blank=True, null=True)
-    md_kompetenzziele = models.TextField("Kompetenzziele", db_column='MD_Kompetenzziele', blank=True, null=True)
-    md_kontakzeit = models.IntegerField("Kontaktzeit", db_column='MD_Kontakzeit', blank=True, null=True)
-    md_lernformen = models.TextField("Lernformen", db_column='MD_Lernformen', blank=True, null=True)
-    md_medienform = models.CharField("Medienform", db_column='MD_Medienform', max_length=256, blank=True, null=True)
-    md_selbststudium = models.IntegerField("Selbststudium", db_column='MD_Selbststudium', blank=True, null=True)
-    md_sprache = models.CharField("Sprache", max_length=30, choices=SPRACHE, blank=True, null=True)
-    md_studienjahr = models.IntegerField("Studienjahr", db_column='MD_Studienjahr', blank=True, null=True)
-    md_sws = models.IntegerField("Semesterwochenstunden",db_column='MD_SWS', blank=True, null=True)
-    md_weitere_informationen = models.TextField("Weitere Informationen", db_column='MD_Weitere_Informationen', blank=True, null=True)
-    md_modulverantwortlich = models.ManyToManyField(Person, db_table="modulverantwortlicher", related_name="modulverantwortlicher", blank=True)
-    md_lehrender = models.ManyToManyField(Person, db_table="lehrender", related_name="lehrender", blank=True)
-    md_voraussetzen = models.ManyToManyField('self', related_name='nachfolger', symmetrical=False, blank=True)
-    md_darstellung = models.CharField('Darstellungsform des Moduls', choices=DARSTELLUNG, max_length=30, null=True, blank=True)
+    md_kuerzel = models.CharField("Modulkürzel", db_column='MD_Kuerzel', primary_key=True, max_length=20, help_text=helper_modul['md_kuerzel'])
+    md_abschlussziel = models.CharField("Abschlussziel", db_column='MD_Abschlussziel', max_length=64, blank=True, null=True, help_text=helper_modul['md_abschlussziel'])
+    md_name = models.CharField("Name des Moduls", db_column='MD_Name', max_length=127, blank=True, null=True, help_text=helper_modul['md_name'])
+    md_angebotsturnus = models.CharField("Angebotsturnus", db_column='MD_Angebotsturnus', max_length=64,choices=ANGEBOTSTURNUS, blank=True, null=True, help_text=helper_modul['md_angebotsturnus'])
+    md_dauer = models.FloatField("Dauer", db_column='MD_Dauer', blank=True, null=True, help_text=helper_modul['md_dauer'])
+    md_ects = models.IntegerField("ECTS", db_column='MD_ECTS', blank=True, null=True, help_text=helper_modul['md_ects'])
+    md_gruppengroesse = models.IntegerField("Gruppengröße", db_column='MD_Gruppengroesse', blank=True, null=True, help_text=helper_modul['md_gruppengroesse'])
+    md_inhalte = models.TextField("Inhalte", db_column='MD_Inhalte', blank=True, null=True, help_text=helper_modul['md_inhalte'])
+    md_kompetenzziele = models.TextField("Kompetenzziele", db_column='MD_Kompetenzziele', blank=True, null=True, help_text=helper_modul['md_kompetenzziele'])
+    md_kontakzeit = models.IntegerField("Kontaktzeit", db_column='MD_Kontakzeit', blank=True, null=True,help_text=helper_modul['md_kontaktzeit'])
+    md_lernformen = models.TextField("Lernformen", db_column='MD_Lernformen', blank=True, null=True, help_text=helper_modul['md_lernformen'])
+    md_medienform = models.CharField("Medienform", db_column='MD_Medienform', max_length=256, blank=True, null=True, help_text=helper_modul['md_medienform'])
+    md_selbststudium = models.IntegerField("Selbststudium", db_column='MD_Selbststudium', blank=True, null=True, help_text=helper_modul['md_selbststudium'])
+    md_sprache = models.CharField("Sprache", max_length=30, choices=SPRACHE, blank=True, null=True, help_text=helper_modul['md_sprache'])
+    md_studienjahr = models.IntegerField("Studienjahr", db_column='MD_Studienjahr', blank=True, null=True, help_text=helper_modul['md_studienjahr'])
+    md_sws = models.IntegerField("Semesterwochenstunden",db_column='MD_SWS', blank=True, null=True, help_text=helper_modul['md_sws'])
+    md_weitere_informationen = models.TextField("Weitere Informationen", db_column='MD_Weitere_Informationen', blank=True, null=True, help_text=helper_modul['md_weitere_informationen'])
+    md_modulverantwortlich = models.ManyToManyField(Person, db_table="modulverantwortlicher", related_name="modulverantwortlicher", blank=True,help_text=helper_modul['md_modulverantwortlich'])
+    md_lehrender = models.ManyToManyField(Person, db_table="lehrender", related_name="lehrender", blank=True, help_text=helper_modul['md_lehrender'])
+    md_voraussetzen = models.ManyToManyField('self', related_name='nachfolger', symmetrical=False, blank=True, help_text=helper_modul['md_voraussetzen'])
+    md_darstellung = models.CharField('Darstellungsform des Moduls', choices=DARSTELLUNG, max_length=30, null=True, blank=True,)
 
     class Meta:
         verbose_name_plural ='Module'
@@ -146,11 +146,11 @@ class Zusatzattribute(models.Model):
 
 class Pruefungsmodalitaet(models.Model):
     pm_nr = models.AutoField("Prüfungsnummer", db_column='PM_Nr', primary_key=True)
-    pm_form = models.CharField("Prüfungsform", db_column='PM_Form', max_length=40, blank=True, null=True)
-    pm_benotung = models.CharField("Benotung", db_column='PM_Benotung', max_length=30, blank=True, null=True)
-    pm_vorraussetzung = models.TextField("Prüfungsvorraussetzungen", db_column='PM_Vorraussetzung', blank=True, null=True)
-    dauer = models.IntegerField("Prüfungsdauer",choices=DAUER, db_column='Dauer', blank=True, null=True)
-    pm_anmeldung = models.TextField("Informationen zur Anmeldung", blank=True, null=True)
+    pm_form = models.CharField("Prüfungsform", db_column='PM_Form', max_length=40, blank=True, null=True, help_text=helper_pruefung['pm_form'])
+    pm_benotung = models.CharField("Benotung", db_column='PM_Benotung', max_length=30, blank=True, null=True, help_text=helper_pruefung['pm_benotung'])
+    pm_vorraussetzung = models.TextField("Prüfungsvorraussetzungen", db_column='PM_Vorraussetzung', blank=True, null=True, help_text=helper_pruefung['pm_vorraussetzung'])
+    dauer = models.IntegerField("Prüfungsdauer",choices=DAUER, db_column='Dauer', blank=True, null=True, help_text=helper_pruefung['dauer'])
+    pm_anmeldung = models.TextField("Informationen zur Anmeldung", blank=True, null=True, help_text=helper_pruefung['pm_anmeldung'])
 
     class Meta:
         verbose_name_plural ='Prüfungsmodalitaeten'
@@ -161,17 +161,17 @@ class Pruefungsmodalitaet(models.Model):
 
 
 class Veranstaltung(models.Model):
-    v_nr = models.AutoField(db_column='V_Nr', primary_key=True)
-    pm_nr = models.ForeignKey(Pruefungsmodalitaet, on_delete=models.SET_NULL, db_column='PM_Nr', blank=True, null=True)
-    v_titel = models.CharField("Titel der Veranstaltung", db_column='V_Titel', max_length=200, blank=True, null=True)
-    v_typ = models.CharField("Typ der Veranstaltung", db_column='V_Typ', max_length=20, blank=True, null=True, choices=VERANSTALTUNGEN)
-    md_kuerzel = models.ForeignKey(Modul, models.DO_NOTHING, db_column='MD_Kuerzel', blank=True, null=True)
-    v_sws = models.IntegerField("Semesterwochenstunden", db_column='V_SWS', blank=True, null=True)
-    v_aufwand_praesenz = models.IntegerField("Aufwand für Präsenz", db_column='V_Aufwand_Praesenz', blank=True, null=True)
-    v_aufwand_pruefungsvorbereitung = models.IntegerField("Aufwand für Prüfungsvorbereitung", db_column='V_Aufwand_Pruefungsvorbereitung', blank=True, null=True)
-    v_aufwand_selbststudium = models.IntegerField("Aufwand fuer Selbststudium", db_column='V_Aufwand_Selbststudium', blank=True, null=True)
-    v_ects = models.IntegerField("ECTS", db_column='V_ECTS', blank=True, null=True)
-    v_semester = models.IntegerField("Semesterangebot", db_column='V_Semester', blank=True, null=True)
+    v_nr = models.AutoField(db_column='V_Nr', primary_key=True,)
+    pm_nr = models.ForeignKey(Pruefungsmodalitaet, on_delete=models.SET_NULL, db_column='PM_Nr', blank=True, null=True, help_text=helper_veranstaltung['pm_nr'])
+    v_titel = models.CharField("Titel der Veranstaltung", db_column='V_Titel', max_length=200, blank=True, null=True, help_text=helper_veranstaltung['v_titel'])
+    v_typ = models.CharField("Typ der Veranstaltung", db_column='V_Typ', max_length=20, blank=True, null=True, choices=VERANSTALTUNGEN, help_text=helper_veranstaltung['v_typ'])
+    md_kuerzel = models.ForeignKey(Modul, models.DO_NOTHING, db_column='MD_Kuerzel', blank=True, null=True, help_text=helper_veranstaltung['md_kuerzel'])
+    v_sws = models.IntegerField("Semesterwochenstunden", db_column='V_SWS', blank=True, null=True, help_text=helper_veranstaltung['v_sws'])
+    v_aufwand_praesenz = models.IntegerField("Aufwand für Präsenz", db_column='V_Aufwand_Praesenz', blank=True, null=True, help_text=helper_veranstaltung['v_aufwand_praesenz'])
+    v_aufwand_pruefungsvorbereitung = models.IntegerField("Aufwand für Prüfungsvorbereitung", db_column='V_Aufwand_Pruefungsvorbereitung', blank=True, null=True, help_text=helper_veranstaltung['v_aufwand_pruefungsvorbereitung'])
+    v_aufwand_selbststudium = models.IntegerField("Aufwand fuer Selbststudium", db_column='V_Aufwand_Selbststudium', blank=True, null=True, help_text=helper_veranstaltung['v_aufwand_selbststudium'])
+    v_ects = models.IntegerField("ECTS", db_column='V_ECTS', blank=True, null=True, help_text=helper_veranstaltung['v_ects'])
+    v_semester = models.IntegerField("Semesterangebot", db_column='V_Semester', blank=True, null=True, help_text=helper_veranstaltung['v_semester'])
 
     class Meta:
         verbose_name_plural ='Veranstaltungen'
@@ -185,6 +185,7 @@ class Veranstaltung(models.Model):
             return Pruefungsmodalitaet.objects.get(pk=int(self.pm_nr.pm_nr))
         else:
             return None
+
 
 class Besitzt(models.Model):
     modul = models.ForeignKey(Modul, on_delete=models.CASCADE, blank=True)
