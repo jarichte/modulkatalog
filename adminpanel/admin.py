@@ -28,7 +28,7 @@ class PruefungsmodalitaetAdmin(admin.ModelAdmin):
 
 class PersonAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Name und Namenskuerzel', {'fields':   ['p_namenskuerzel', 'p_name', 'p_vorname', 'p_titel']}),
+        ('Name und Namenskuerzel', {'fields':   ['p_namenskuerzel', 'p_vorname', 'p_name', 'p_titel']}),
         ('Adresse', {'fields':  ['p_adresse_email', 'p_adresse_buero', 'p_telefon']})
     ]
     list_display = ('p_name', 'p_vorname', 'p_namenskuerzel',)

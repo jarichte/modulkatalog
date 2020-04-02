@@ -47,6 +47,7 @@ ANGEBOTSTURNUS= [('FSS', 'FSS'),
                  ]
 VERANSTALTUNGEN= [('Vorlesung', 'Vorlesung'),
                   ('Übung', 'Übung'),
+                  ('Tutorium', 'Tutorium'),
                   ('Seminar', 'Seminar'),
                   ('Arbeitsgruppe', 'Arbeitsgruppe')
                   ]
@@ -94,7 +95,7 @@ helper_veranstaltung = {
     'v_titel': recht + sowi + philo,
     'v_typ': wifo + bwl + vwl + sowi,
     'md_kuerzel':wifo + bwl + vwl + recht + sowi + philo,
-    'v_sws':wifo + bwl + vwl + recht + sowi + philo,
+    'v_sws':wifo + vwl + recht + philo,
     'v_aufwand_praesenz': wifo + bwl + vwl + philo,
     'v_aufwand_pruefungsvorbereitung': philo,
     'v_aufwand_selbststudium': wifo + bwl + philo,
@@ -106,6 +107,6 @@ helper_pruefung = {
     'pm_form': wifo + bwl + vwl + recht + sowi + philo,
     'pm_benotung': bwl + sowi + philo,
     'pm_vorraussetzung':  wifo + bwl  + sowi + philo,
-    'dauer': wifo,
+    'dauer': wifo + bwl,
     'pm_anmeldung': '-',
 }
