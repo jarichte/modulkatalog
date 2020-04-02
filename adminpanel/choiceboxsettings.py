@@ -92,12 +92,12 @@ helper_modul = {
 
 helper_veranstaltung = {
     'pm_nr': wifo + bwl + vwl + recht + sowi + philo,
-    'v_titel': recht + sowi + philo,
-    'v_typ': wifo + bwl + vwl + sowi,
+    'v_titel': wifo + recht + sowi + philo,
+    'v_typ': bwl + vwl + sowi,
     'md_kuerzel':wifo + bwl + vwl + recht + sowi + philo,
     'v_sws':wifo + vwl + recht + philo,
     'v_aufwand_praesenz': wifo + bwl + vwl + philo,
-    'v_aufwand_pruefungsvorbereitung': philo,
+    'v_aufwand_pruefungsvorbereitung': wifo + vwl + philo,
     'v_aufwand_selbststudium': wifo + bwl + philo,
     'v_ects': sowi + philo,
     'v_semester':sowi + philo,
@@ -107,6 +107,6 @@ helper_pruefung = {
     'pm_form': wifo + bwl + vwl + recht + sowi + philo,
     'pm_benotung': bwl + sowi + philo,
     'pm_vorraussetzung':  wifo + bwl  + sowi + philo,
-    'dauer': wifo + bwl,
+    'dauer': wifo + bwl + sowi,
     'pm_anmeldung': '-',
 }
