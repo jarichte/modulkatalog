@@ -14,6 +14,13 @@ def overview(request):
         'modulkat_list': modulkat_list,
     }
     return HttpResponse(template.render(context, request))
+def overview_by_fak(request, fak):
+    template = loader.get_template('adminpanel/overview.html')
+    modulkat_list = Modulkatalog.objects.filter(mk_von_studiengang__gehoert_zu__fk_name = fak)
+    context = {
+        'modulkat_list': modulkat_list
+    }
+    return HttpResponse(template.render(context, request))
 
 def generatecontext(modulkat_id):
     modulkat = Modulkatalog.objects.get(pk=modulkat_id)

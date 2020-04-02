@@ -1,16 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>Modulverwaltungsassistent</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+* {
+  box-sizing: border-box;
+  }
+ body{
+   font-family: myriad-pro;
+   marin: 0;
+ }
+.header {
+  padding: 30px;
+  text-align: left;
+  background-color: #D3D3D3;
+  color: rgb(35,46,88);
+  font-size:1.6em;
+}
+
+table {
+  width: 100%;
+  }
+
+.nav {
+  background-color: rgb(35,46,88);
+  overflow: hidden;
+}
+
+.nav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.nav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+ul {
+    font-size: 1.2em;
+}
+
+    </style>
 </head>
 <body>
-<h1> Modulkataloge der Universität Mannheim</h1>
+<div class="header">
+    <table>
+        <tr>
+            <td width="30%"><img src="https://www.uni-mannheim.de/typo3conf/ext/uma_site/Resources/Public/Images/Icons/logo-universitaet-mannheim.svg" width="425" height="119" alt="1"></td>
+            <td width="10%"></td>
+            <td width="60%"><h1>Modulverwaltungsassistent</h1></td>
+        </tr>
+    </table>
+</div>
+<div class="nav">
+    <a href="{% url 'index' %}"> Alle Fakultäten</a>
+    <a href="{% url 'fak' 'Fakultaet fuer Wirtschaftsinformatik und Wirtschaftsmathematik' %}"> Fakultät Wirtschaftsinformatik und Wirtschaftsmathematik</a>
+    <a href="{% url 'fak' 'Fakultaet fuer Betriebswirtschaftslehre' %}"> Fakultät für Betriebswirtschaftslehre</a>
+    <a href="{% url 'fak' 'Philosophische Fakultaet' %}"> Philosophische Fakultät </a>
+    <a href="{% url 'fak' 'Fakultaet fuer Rechtswissenschaften und Volkswirtschaftslehre' %}"> Fakultät für Rechtswissenschaften und Volkswirtschaftlehre</a>
+    <a href="{% url 'fak' 'Fakultaet fuer Sozialwissenschaften'%}"> Fakultät für Sozialwissenschaften</a>
+    <a href="{% url 'admin:index' %}" style="float:right"> Datenbankadministration </a>
+</div>
+
 {% if modulkat_list %}
     <ul>
     {% for modulkataloge in modulkat_list %}
         <li><a href="{% url 'detail' modulkataloge.id %}"> {{ modulkataloge.mk_von_studiengang}} {{modulkataloge.mk_abschluss}} {{modulkataloge.mk_jahr}}</a></li>
-        <a href="{% url 'pdf' modulkataloge.id %}"> Als PDF anzeigen</a>
+        <a href="{% url 'pdf' modulkataloge.id %}"> Als PDF anzeigen | </a>
         <a href="{% url 'copy' modulkataloge.id %}">Modulkatalog kopieren</a>
     {% endfor %}
     </ul>
