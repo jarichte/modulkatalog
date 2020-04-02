@@ -72,7 +72,7 @@ ul {
 {% if modulkat_list %}
     <ul>
     {% for modulkataloge in modulkat_list %}
-        <li><a href="{% 'url' 'detail' modulkataloge.id %}"> {{ modulkataloge.mk_von_studiengang}} {{modulkataloge.mk_jahr}}</a></li>
+        <li><a href="{% url 'detail' modulkataloge.id %}"> {{ modulkataloge.mk_von_studiengang}} {{modulkataloge.mk_jahr}}</a></li>
         <a href="{% url 'pdf' modulkataloge.id %}"> Als PDF anzeigen | </a>
         <a href="{% url 'copy' modulkataloge.id %}">Modulkatalog kopieren</a>
     {% endfor %}
