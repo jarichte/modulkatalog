@@ -10,7 +10,6 @@
 
 <body>
 <div class="modul">
-        {% for veranstaltung in modul.veranstaltung_set.all %}
 <table class="wifo">
     <tr>
     <th width="20%">&nbsp; {{ modul.md_kuerzel|default:'-' }}</th>
@@ -19,13 +18,17 @@
     <tr>
     <td>&nbsp;Form der Veranstaltung</td>
     <td>&nbsp;
-            {{veranstaltung.v_titel}}
+        {% for veranstaltung in modul.veranstaltung_set.all %}
+            {{veranstaltung.v_typ}}
+        {% endfor %}
     </td>
     </tr>
     <tr>
     <td>&nbsp;Typ der Veranstaltung</td>
     <td>&nbsp;
-        {{t.typ}}
+        {% for veranstaltung in modul.veranstaltung_set.all %}
+            {{t.typ}}
+        {% endfor %}
     </td>
     </tr>
     <tr>
@@ -39,9 +42,11 @@
     <tr>
     <td>&nbsp;Arbeitsaufwand</td>
     <td>&nbsp;
+        {% for veranstaltung in modul.veranstaltung_set.all %}
         Präsenzstudium: {{veranstaltung.v_aufwand_praesenz|default:'0'}} h pro Semester<br>
         Vor- und Nachbereitung der Veranstaltung und freies Selbststudium: {{veranstaltung.v_aufwand_selbststudium|default:'0'}} h pro Semester<br>
         Vorbereitung für die Prüfung, z.B. Prüfungs-/Semi-narabschlussarbeits- und Präsentationsvorbereitung: {{veranstaltung.v_aufwand_pruefungsvorbereitung|default:'0'}} h pro Semester<br>
+        {% endfor %}
     </td>
     </tr>
     <tr>
@@ -66,20 +71,28 @@
     </tr>
     <tr>
     <td>&nbsp;Art der Pr&uuml;fungsleistung</td>
-    <td>&nbsp;
-    {{veranstaltung.getPruefung.pm_form}}
+    <td>
+        {% for veranstaltung in modul.veranstaltung_set.all %}&nbsp;
+            {% if veranstaltung.getPruefung %}
+                {{veranstaltung.getPruefung.pm_form}}
+            {% endif %}
+        {% endfor %}
     </td>
     </tr>
     <tr>
     <td>&nbsp;Pr&uuml;fungsvorleistung</td>
     <td>&nbsp;
-    {{veranstaltung.getPruefung.pm_vorraussetzungen}}
+        {% for veranstaltung in modul.veranstaltung_set.all %}&nbsp;
+            {{veranstaltung.getPruefung.pm_vorraussetzungen}}
+        {% endfor %}
     </td>
     </tr>
     <tr>
     <td>&nbsp;Pr&uuml;fungsdauer&nbsp;</td>
     <td>&nbsp;
-        {{veranstaltung.getPruefung.dauer}} Minuten
+        {% for veranstaltung in modul.veranstaltung_set.all %}
+            {{veranstaltung.getPruefung.dauer}} Minuten
+        {% endfor %}
     </td>
     </tr>
     <tr>
@@ -133,7 +146,6 @@
     </tr>
 
 </table>
-        {% endfor %}
 </div>
 </body>
 </html>

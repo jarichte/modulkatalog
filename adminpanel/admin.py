@@ -20,7 +20,7 @@ class VeranstaltungAdmin(admin.ModelAdmin):
         ('Sonstige Informationen', {'fields': ['v_ects', 'v_semester']})
     ]
     list_display = ('v_titel', 'v_typ', 'md_kuerzel')
-    search_fields = ('v_titel', 'v_typ')
+    search_fields = ('v_titel', 'v_typ','md_kuerzel__md_kuerzel')
 
 class PruefungsmodalitaetAdmin(admin.ModelAdmin):
     list_display = ('pm_nr', 'pm_form', 'pm_benotung', 'dauer')
