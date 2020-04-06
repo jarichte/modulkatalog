@@ -149,7 +149,7 @@ class ModulAdmin(admin.ModelAdmin):
         elif request.user.groups.filter(name="Philo").exists():
             return [
                 ('Darstellungsform des Moduls | Name der Abteilung', {'fields': ['md_darstellung']}),
-                ('Allgemeine Informationen', {'fields': ['md_kuerzel', 'md_name', 'md_ects', 'md_sprache', 'md_modulverantwortlich',]}),
+                ('Allgemeine Informationen', {'fields': ['md_kuerzel', 'md_name', 'md_sprache', 'md_modulverantwortlich',]}),
                 ('Inhalt und Beschreibung',{'fields': ['md_inhalte', 'md_kompetenzziele', 'md_lernformen']}),
                 ('Weitere Informationen', {'fields': ['md_abschlussziel', 'md_sws', 'md_voraussetzen','md_weitere_informationen']})
 
