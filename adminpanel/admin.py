@@ -149,7 +149,7 @@ class ModulAdmin(admin.ModelAdmin):
         elif request.user.groups.filter(name="Philo").exists():
             return [
                 ('Darstellungsform des Moduls | Name der Abteilung', {'fields': ['md_darstellung']}),
-                ('Allgemeine Informationen', {'fields': ['md_kuerzel', 'md_name', 'md_sprache', 'md_modulverantwortlich',]}),
+                ('Allgemeine Informationen', {'fields': ['md_kuerzel', 'md_name', 'md_ects', 'md_sprache', 'md_modulverantwortlich',]}),
                 ('Inhalt und Beschreibung',{'fields': ['md_inhalte', 'md_kompetenzziele', 'md_lernformen']}),
                 ('Weitere Informationen', {'fields': ['md_abschlussziel', 'md_sws', 'md_voraussetzen','md_weitere_informationen']})
 
@@ -205,9 +205,43 @@ class ModulkatalogAdmin(admin.ModelAdmin):
     list_display = ('mk_von_studiengang', 'mk_abschluss', 'mk_jahr', 'mk_gueltig_von', 'mk_gueltig_bis')
     search_fields = ('mk_von_studiengang__sg_name', 'mk_jahr')
 
+    def get_queryset(self, request):
+        qs = super(ModulkatalogAdmin, self).get_queryset(request)
+        if request.user.groups.filter(name='Wifo_Wima').exists():
+            return qs.filter(mk_von_studiengang__gehoert_zu__fk_name = 'Fakultaet fuer Wirtschaftsinformatik und Wirtschaftsmathematik')
+        elif request.user.groups.filter(name='Vwl').exists():
+            return qs.filter(mk_von_studiengang__gehoert_zu__fk_name = 'Fakultaet fuer Rechtswissenschaften und Volkswirtschaftslehre')
+        if request.user.groups.filter(name='Recht').exists():
+            return qs.filter(mk_von_studiengang__gehoert_zu__fk_name = 'Fakultaet fuer Rechtswissenschaften und Volkswirtschaftslehre')
+        if request.user.groups.filter(name='Bwl').exists():
+            return qs.filter(mk_von_studiengang__gehoert_zu__fk_name = 'Fakultaet fuer Betriebswirtschaftslehre')
+        if request.user.groups.filter(name='Sowi').exists():
+            return qs.filter(mk_von_studiengang__gehoert_zu__fk_name = 'Fakultaet fuer Sozialwissenschaften')
+        if request.user.groups.filter(name='Philo').exists():
+            return qs.filter(mk_von_studiengang__gehoert_zu__fk_name = 'Philosophische Fakultaet')
+        else:
+            return qs
+
 class BesitztAdmin(admin.ModelAdmin):
     list_display = ('modul', 'modulkatalog', 'typ',)
     search_fields = ('modul__md_kuerzel', 'modulkatalog__mk_von_studiengang__sg_name', 'typ',)
+
+    def get_queryset(self, request):
+        qs = super(BesitztAdmin, self).get_queryset(request)
+        if request.user.groups.filter(name='Wifo_Wima').exists():
+            return qs.filter(modulkatalog__mk_von_studiengang__gehoert_zu__fk_name='Fakultaet fuer Wirtschaftsinformatik und Wirtschaftsmathematik')
+        elif request.user.groups.filter(name='Vwl').exists():
+            return qs.filter(modulkatalog__mk_von_studiengang__gehoert_zu__fk_name='Fakultaet fuer Rechtswissenschaften und Volkswirtschaftslehre')
+        elif request.user.groups.filter(name='Recht').exists():
+            return qs.filter(modulkatalog__mk_von_studiengang__gehoert_zu__fk_name='Fakultaet fuer Rechtswissenschaften und Volkswirtschaftslehre')
+        elif request.user.groups.filter(name='Bwl').exists():
+            return qs.filter(modulkatalog__mk_von_studiengang__gehoert_zu__fk_name='Fakultaet fuer Betriebswirtschaftslehre')
+        elif request.user.groups.filter(name='Philo').exists():
+            return qs.filter(modulkatalog__mk_von_studiengang__gehoert_zu__fk_name='Philosophische Fakultaet')
+        elif request.user.groups.filter(name='Sowi').exists():
+            return qs.filter(modulkatalog__mk_von_studiengang__gehoert_zu__fk_name='Fakultaet fuer Sozialwissenschaften')
+        else:
+            return qs
 
 admin.site.register(Fakultaet)
 admin.site.register(Studiengang)
