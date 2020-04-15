@@ -8,11 +8,6 @@
 <body>
 <div class="modul">
 <table class="bwl">
-    <colgroup>
-        <col class="attribute">
-        <col class="praesenz">
-        <col class="selbst">
-    </colgroup>
     <tr>
         <td colspan="3">Modul: {{modul.md_kuerzel}} {{modul.md_name}}</td>
     </tr>
@@ -124,6 +119,14 @@
         {% endfor %}
         </td>
     </tr>
+    {% for zusatz in zt %}
+    {% if zusatz.md_kuerzel == modul %}
+    <tr>
+        <td> {{zusatz.zt_name}}</td>
+        <td> {{zusatz.zt_wert}}</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
 </table>
 </div>
 </body>

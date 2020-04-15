@@ -99,6 +99,14 @@
         <td>Weitere Informationen</td>
         <td>{{modul.md_weitere_informationen| default:' '}}</td>
     </tr>
+    {% for zusatz in zt %}
+    {% if zusatz.md_kuerzel == modul %}
+    <tr>
+        <td> {{zusatz.zt_name}}</td>
+        <td> {{zusatz.zt_wert}}</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
 </table>
 </div>
 </body>

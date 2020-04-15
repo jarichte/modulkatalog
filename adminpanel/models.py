@@ -128,12 +128,12 @@ class Modulkatalog(models.Model):
         managed = True
         db_table = 'modulkatalog'
     def __str__(self):
-        return str(self.mk_von_studiengang)
+        return str(self.mk_von_studiengang) + ' (' + str(self.mk_jahr) + ')'
 
 
 class Zusatzattribute(models.Model):
-    zt_name = models.CharField(db_column='ZT_Name', primary_key=True, max_length=30)
-    zt_wert = models.CharField(db_column='ZT_Wert', max_length=256, blank=True, null=True)
+    zt_name = models.CharField('Attributname', db_column='ZT_Name', primary_key=True, max_length=30)
+    zt_wert = models.CharField('Attributwert', db_column='ZT_Wert', max_length=256, blank=True, null=True)
     md_kuerzel = models.ForeignKey(Modul, on_delete=models.SET_NULL, db_column='MD_Kuerzel', blank=True, null=True)
 
     class Meta:

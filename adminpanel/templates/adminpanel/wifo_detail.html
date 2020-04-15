@@ -144,7 +144,14 @@
     <td>&nbsp;Einordnung in Fachsemester</td>
     <td>&nbsp;{{modul.md_studienjahr}} Fachsemester</td>
     </tr>
-
+    {% for zusatz in zt %}
+    {% if zusatz.md_kuerzel == modul %}
+    <tr>
+        <td> {{zusatz.zt_name}}</td>
+        <td> {{zusatz.zt_wert}}</td>
+    </tr>
+    {% endif %}
+    {% endfor %}
 </table>
 </div>
 </body>

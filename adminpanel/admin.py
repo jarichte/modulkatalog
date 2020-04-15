@@ -110,8 +110,11 @@ class BesitztStacked(admin.StackedInline):
     model = Besitzt
     extra = 1
 
-class ModulAdmin(admin.ModelAdmin):
+class ZusatzattributeStacked(admin.StackedInline):
+    model = Zusatzattribute
+    extra = 1
 
+class ModulAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Darstellungsform des Moduls | Name der Abteilung',   {'fields': ['md_darstellung']}),
         ('Allgemeine Informationen',  {'fields': ['md_kuerzel', 'md_name', 'md_ects', 'md_sprache', 'md_modulverantwortlich', 'md_angebotsturnus']}),
@@ -120,7 +123,7 @@ class ModulAdmin(admin.ModelAdmin):
     ]
     list_display = ('md_kuerzel', 'md_name')
     search_fields = ['md_kuerzel', 'md_name']
-    inlines = [VeranstaltungStacked, BesitztStacked]
+    inlines = [VeranstaltungStacked, BesitztStacked, ZusatzattributeStacked]
 
     def get_fieldsets(self, request, obj=None):
         if request.user.groups.filter(name='Recht').exists():
