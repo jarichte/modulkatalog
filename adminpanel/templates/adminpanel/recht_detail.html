@@ -115,8 +115,9 @@
     {% for zusatz in zt %}
     {% if zusatz.md_kuerzel == modul %}
     <tr>
-        <td> {{zusatz.zt_name}}</td>
-        <td> {{zusatz.zt_wert}}</td>
+        <td colspan="6"> {{zusatz.zt_name}} <br>
+						 {{zusatz.zt_wert}}
+		</td>
     </tr>
     {% endif %}
     {% endfor %}
