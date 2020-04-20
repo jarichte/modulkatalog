@@ -1,5 +1,16 @@
 #This part provides the lists for the choice boxes in the models.py
+import datetime
 
+# creates a list of tuples with years
+def create_years():
+    now = datetime.datetime.now()
+    start = now.year - 10
+    end = now.year + 10
+    years = []
+    while end> start:
+        years.append((start, start))
+        start += 1
+    return years
 ABSCHLUSS= [('B.Sc.', 'Bachelor of Science'),
            ('M.Sc.', 'Master of Science'),
            ('B.Edu.', 'Bachelor of Education'),
@@ -14,21 +25,6 @@ SPRACHE= [('Deutsch', 'Deutsch'),
          ('Englisch', 'english')
          ]
 
-JAHR= [(2013,2013),
-       (2014,2014),
-       (2015,2015),
-       (2016,2016),
-       (2017,2017),
-       (2018,2018),
-       (2019,2019),
-       (2020,2020),
-       (2021,2021),
-       (2022,2022),
-       (2023,2023),
-       (2024,2024),
-       (2025,2025),
-       (2026,2026)
-       ]
 
 DAUER= [(30,"30 Minuten"),
         (45,"45 Minuten"),
@@ -47,7 +43,6 @@ ANGEBOTSTURNUS= [('FSS', 'FSS'),
                  ]
 VERANSTALTUNGEN= [('Vorlesung', 'Vorlesung'),
                   ('Übung', 'Übung'),
-                  ('Tutorium', 'Tutorium'),
                   ('Seminar', 'Seminar'),
                   ('Arbeitsgruppe', 'Arbeitsgruppe')
                   ]
@@ -92,12 +87,12 @@ helper_modul = {
 
 helper_veranstaltung = {
     'pm_nr': wifo + bwl + vwl + recht + sowi + philo,
-    'v_titel': wifo + recht + sowi + philo,
-    'v_typ': bwl + vwl + sowi,
+    'v_titel': recht + sowi + philo,
+    'v_typ': wifo + bwl + vwl + sowi,
     'md_kuerzel':wifo + bwl + vwl + recht + sowi + philo,
-    'v_sws':wifo + vwl + recht + philo,
+    'v_sws':wifo + bwl + vwl + recht + sowi + philo,
     'v_aufwand_praesenz': wifo + bwl + vwl + philo,
-    'v_aufwand_pruefungsvorbereitung': wifo + vwl + philo,
+    'v_aufwand_pruefungsvorbereitung': philo,
     'v_aufwand_selbststudium': wifo + bwl + philo,
     'v_ects': sowi + philo,
     'v_semester':sowi + philo,
@@ -107,6 +102,6 @@ helper_pruefung = {
     'pm_form': wifo + bwl + vwl + recht + sowi + philo,
     'pm_benotung': bwl + sowi + philo,
     'pm_vorraussetzung':  wifo + bwl  + sowi + philo,
-    'dauer': wifo + bwl + sowi,
+    'dauer': wifo,
     'pm_anmeldung': '-',
 }

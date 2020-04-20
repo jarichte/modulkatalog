@@ -43,8 +43,24 @@ table {
   color: black;
 }
 
-ul {
-    font-size: 1.2em;
+.content {
+     margin-left: auto;
+     margin-right: auto;
+     width: 70%;
+     font-size: 1.2em;
+     overflow-x:auto;
+}
+.content table {
+    text-align: center;
+}
+.content th {
+height: 40px;
+}
+.content td {
+    height: 30px;
+}
+.content tr:hover {
+ background-color: #f5f5f5;
 }
 
     </style>
@@ -68,17 +84,28 @@ ul {
     <a href="{% url 'fak' 'Fakultaet fuer Sozialwissenschaften'%}"> Fakultät für Sozialwissenschaften</a>
     <a href="{% url 'admin:index' %}" style="float:right"> Datenbankadministration </a>
 </div>
-
+<div class = "content">
 {% if modulkat_list %}
-    <ul>
+    <table>
+        <tr>
+            <th width="40%">Modulkatalog</th>
+            <th width="10%">Gültig von</th>
+            <th width="10%">Gültig bis</th>
+            <th width="40%">Aktionen</th>
+
+        </tr>
     {% for modulkataloge in modulkat_list %}
-        <li><a href="{% url 'detail' modulkataloge.id %}"> {{ modulkataloge.mk_von_studiengang}} {{modulkataloge.mk_jahr}}</a></li>
-        <a href="{% url 'pdf' modulkataloge.id %}"> Als PDF anzeigen | </a>
-        <a href="{% url 'copy' modulkataloge.id %}">Modulkatalog kopieren</a>
+        <tr>
+            <td><a href="{% url 'detail' modulkataloge.id %}"> {{ modulkataloge.mk_von_studiengang}} {{modulkataloge.mk_abschluss}} {{modulkataloge.mk_jahr}}</a></td>
+            <td>{{modulkataloge.mk_gueltig_von}}</td>
+            <td>{{modulkataloge.mk_gueltig_bis}}</td>
+            <td><a href="{% url 'pdf' modulkataloge.id %}"> Als PDF anzeigen | </a> <a href="{% url 'copy' modulkataloge.id %}">Modulkatalog kopieren</a></td>
+        </tr>
     {% endfor %}
-    </ul>
+    </table>
 {% else %}
     <p>Es sind keine Modulkataloge vorhanden!</p>
 {% endif %}
+</div>
 </body>
 </html>

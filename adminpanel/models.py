@@ -116,7 +116,7 @@ class Modul(models.Model):
 class Modulkatalog(models.Model):
     mk_von_studiengang = models.ForeignKey('Studiengang', models.DO_NOTHING, db_column='MK_von_Studiengang')
     mk_abschluss = models.CharField("Studienabschluss", max_length=40, choices=ABSCHLUSS, null=True)
-    mk_jahr = models.IntegerField("Jahr",choices=JAHR, db_column='MK_Jahr', blank=True, null=True)
+    mk_jahr = models.IntegerField("Jahr",choices=create_years(), db_column='MK_Jahr', blank=True, null=True)
     mk_vorwort = models.TextField("Vorwort", db_column='MK_Vorwort', max_length=2048, blank=True, null=True)
     mk_nachwort = models.TextField("Nachwort", db_column='MK_Nachwort', max_length=2048, blank=True, null=True)
     mk_gueltig_von = models.DateField("Gültig von", db_column='MK_Gueltig_von', blank=True, null=True)
